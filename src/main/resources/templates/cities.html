@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>Person Details</title>
+
+    <style type="text/css">
+        body {
+         font-family: Arial, sans-serif;
+         background-color: #f4f4f9;
+         margin: 0;
+         padding: 0;
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         height: 50vh;
+       }
+
+        .container {
+         background-color: #fff;
+         padding: 30px;
+         border-radius: 10px;
+         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+         width: 80%;
+         max-width: 1000px;
+         box-sizing: border-box;
+     }
+
+        h1 {
+         text-align: center;
+         color: #333;
+         margin-bottom: 20px;
+     }
+
+        .employee-table {
+         width: 100%;
+         border-collapse: collapse;
+         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+         border-radius: 10px;
+         overflow: hidden;
+     }
+
+        .employee-table thead {
+         background-color: #7e57c2;
+         color: #fff;
+         text-align: left;
+     }
+
+        .employee-table th, .employee-table td {
+         padding: 15px;
+          font-weight: bold;
+         border-bottom: 1px solid #ddd;
+     }
+
+         .employee-table tbody tr:nth-child(odd) {
+         background-color: #f9f9f9;
+     }
+
+        .employee-table tbody tr:hover {
+         background-color: #f1f1f1;
+     }
+
+     phone-number {
+               text-decoration: underline;
+     }
+      .btn {
+        width: 50%;
+        padding: 10px;
+        background-color: #7e57c2;
+        border: 1px solid;
+        border-radius: 5px;
+        color: #fff;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .btn:hover {
+        background-color: #5e35b1;
+    }
+
+    </style>
+</head>
+
+
+<body>
+<div class="container">
+    <h1>Person Details</h1>
+    <table class="employee-table">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Village</th>
+            <th>Caste</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        <tr th:each="employee : ${cities}">
+
+            <td th:text="${employee.name}"></td>
+            <td class="phone-number" data-number="${employee.phone}" th:text="${employee.phone}"></td>
+            <td th:text="${employee.village}"></td>
+            <td th:text="${employee.caste}"></td>
+
+            <td>
+                <a th:href="@{/editEmployee/{id}(id=${employee.id})}" class="btn edit-btn">Edit</a>
+                <form th:action="@{/deleteEmployee/{id}(id=${employee.id})}" method="post" style="display:inline;">
+                    <button type="submit" class="btn delete-btn">Delete</button>
+                </form>
+            </td>
+
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    $(document).ready(function(){
+        $('.phone-number').on('click', function(){
+            var phoneNumber = $(this).data('number');
+            window.location.href = 'tel:' + phoneNumber;
+        });
+    });
+</script>
+</body>
+</html>
